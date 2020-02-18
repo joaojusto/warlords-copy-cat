@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "1f87abd9360257c521c7ac088c1ae6f9",
+    "revision": "60e28d9bdadd19b89a0744117459848d",
     "url": "/warlords-copy-cat/index.html"
   },
   {
-    "revision": "abd27783e0a002656d39",
+    "revision": "32e20fb06fd50f256ddc",
     "url": "/warlords-copy-cat/static/css/main.d1b05096.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/warlords-copy-cat/static/js/2.ca21f9a4.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "abd27783e0a002656d39",
-    "url": "/warlords-copy-cat/static/js/main.8252a7cd.chunk.js"
+    "revision": "32e20fb06fd50f256ddc",
+    "url": "/warlords-copy-cat/static/js/main.a80147c6.chunk.js"
   },
   {
     "revision": "a40dcda68720a88c6811",
