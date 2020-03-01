@@ -27,8 +27,9 @@ const config = {
 
 const WATER_ID = 255;
 const TERRAIN_ID = 199;
-const MAP_WIDTH = 40;
-const MAP_HEIGHT = 20;
+const MAP_WIDTH = 100;
+const MAP_HEIGHT = 100;
+// const SEED = 0.8444330836642344;
 
 function preload() {
   this.load.setBaseURL(`${process.env.PUBLIC_URL}`);
@@ -41,7 +42,7 @@ function create() {
   const map = this.make.tilemap({ key: "map" });
   const { tileWidth, tileHeight } = map;
   const tiles = map.addTilesetImage("tuxmon-sample-32px-extruded", "tiles");
-  const terrainLayer = map.createBlankDynamicLayer(
+  let terrainLayer = map.createBlankDynamicLayer(
     "terrain",
     tiles,
     0,
@@ -56,23 +57,52 @@ function create() {
   const terrainMatrix = generator(MAP_WIDTH, MAP_HEIGHT);
   terrainMatrix.forEach((row, y) =>
     row.forEach((tile, x) => {
-      const id = tile === 0 ? WATER_ID : TERRAIN_ID;
-      spawnPoint = !spawnPoint && id !== 0 ? { x, y } : spawnPoint;
-      terrainLayer.putTileAt(id, x, y);
+      if (!spawnPoint && tile !== WATER_ID) {
+        spawnPoint = { x, y };
+      }
+      terrainLayer.putTileAt(tile, x, y);
     })
   );
+
+  terrainLayer = map.convertLayerToStatic(terrainLayer);
+
+  const { width, height } = terrainLayer;
+  const minimapConfig = {
+    width: 120,
+    height: 120,
+    margin: 10,
+    background: 0x002244,
+    name: "minimap"
+  };
+
+  this.cameras
+    .add(
+      config.width - minimapConfig.width - minimapConfig.margin,
+      minimapConfig.margin,
+      minimapConfig.width,
+      minimapConfig.height
+    )
+    .setZoom((minimapConfig.height - 2) / height)
+    .setName(minimapConfig.name)
+    .setBackgroundColor(minimapConfig.background)
+    .centerOn(width / 2, height / 2);
 
   const player = this.physics.add
     .sprite(spawnPoint.x, spawnPoint.y, "warrior")
     .setDisplaySize(24, 24)
     .setDisplayOrigin(-2, -4);
 
+  this.cameras.main.setBounds(0, 0, width, height);
+  this.cameras.main.startFollow(player);
+
   const finder = new EasyStar.js();
   finder.setGrid(terrainMatrix);
-  finder.setAcceptableTiles([1]);
+  finder.setAcceptableTiles([TERRAIN_ID]);
   finder.enableDiagonals();
 
   const move = path => {
+    if (!path) return;
+
     const tweens = path.slice(1, path.length).map(({ x, y }) => ({
       targets: player,
       x: { value: x * tileWidth, duration: 200 },
@@ -89,15 +119,12 @@ function create() {
     const fromX = Math.floor(player.x / tileWidth);
     const fromY = Math.floor(player.y / tileHeight);
 
-    finder.findPath(fromX, fromY, toX, toY, path => {
-      if (path === null) {
-        console.warn("Path was not found.");
-      } else {
-        console.log("Path was found!", path);
-        move(path);
-      }
-    });
-    finder.calculate();
+    try {
+      finder.findPath(fromX, fromY, toX, toY, move);
+      finder.calculate();
+    } catch (error) {
+      console.log("Ups! Out of scope :S");
+    }
   });
 }
 
