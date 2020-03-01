@@ -25,6 +25,14 @@ const config = {
   pixelArt: true
 };
 
+const minimapConfig = {
+  width: 102,
+  height: 102,
+  margin: 10,
+  background: 0x002244,
+  name: "minimap"
+};
+
 const WATER_ID = 255;
 const TERRAIN_ID = 199;
 const MAP_WIDTH = 100;
@@ -67,13 +75,6 @@ function create() {
   terrainLayer = map.convertLayerToStatic(terrainLayer);
 
   const { width, height } = terrainLayer;
-  const minimapConfig = {
-    width: 120,
-    height: 120,
-    margin: 10,
-    background: 0x002244,
-    name: "minimap"
-  };
 
   this.cameras
     .add(
