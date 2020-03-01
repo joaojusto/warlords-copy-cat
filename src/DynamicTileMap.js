@@ -33,8 +33,9 @@ const minimapConfig = {
   name: "minimap"
 };
 
-const WATER_ID = 255;
-const TERRAIN_ID = 199;
+export const WATER_ID = 255;
+export const FLOWER_ID = [8, 32, 56, 80, 104, 128, 152, 176, 200];
+export const TERRAIN_ID = [190, 127, 126];
 const MAP_WIDTH = 100;
 const MAP_HEIGHT = 100;
 // const SEED = 0.8444330836642344;
@@ -98,7 +99,7 @@ function create() {
 
   const finder = new EasyStar.js();
   finder.setGrid(terrainMatrix);
-  finder.setAcceptableTiles([TERRAIN_ID]);
+  finder.setAcceptableTiles([...TERRAIN_ID, ...FLOWER_ID]);
   finder.enableDiagonals();
 
   const move = path => {

@@ -1,8 +1,7 @@
 import { Noise } from "noisejs";
-import { range } from "lodash";
+import { range, sample } from "lodash";
 
-const WATER_ID = 255;
-const TERRAIN_ID = 199;
+import { WATER_ID, TERRAIN_ID, FLOWER_ID } from "./DynamicTileMap";
 
 export default (width, height, seed = Math.random()) => {
   const noise = new Noise();
@@ -28,12 +27,15 @@ export default (width, height, seed = Math.random()) => {
       return value;
     });
   });
-  const lowerBound = min - min * 0.8;
-  console.log(lowerBound);
+  const lowerBound = min - min * 0.6;
+  const maxBound = max - max * 0.3;
+  const midBound = max - max * 0.6;
+
   const normalized = matrix.map(row =>
     row.map(tile => {
-      if (tile > lowerBound) return TERRAIN_ID;
-      return WATER_ID;
+      if (tile < lowerBound) return WATER_ID;
+      if (tile >= maxBound) return sample(FLOWER_ID);
+      return sample(TERRAIN_ID);
     })
   );
 
