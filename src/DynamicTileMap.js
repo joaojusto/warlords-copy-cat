@@ -47,6 +47,8 @@ function preload() {
   this.load.tilemapTiledJSON("map", "/tilemaps/warlords.json");
 }
 
+let controls;
+
 function create() {
   const map = this.make.tilemap({ key: "map" });
   const { tileWidth, tileHeight } = map;
@@ -95,7 +97,7 @@ function create() {
     .setDisplayOrigin(-2, -4);
 
   this.cameras.main.setBounds(0, 0, width, height);
-  this.cameras.main.startFollow(player);
+  // this.cameras.main.startFollow(player);
 
   const finder = new EasyStar.js();
   finder.setGrid(terrainMatrix);
@@ -128,8 +130,27 @@ function create() {
       console.log("Ups! Out of scope :S");
     }
   });
+
+  const cursors = this.input.keyboard.createCursorKeys();
+
+  const controlConfig = {
+    camera: this.cameras.main,
+    left: cursors.left,
+    right: cursors.right,
+    up: cursors.up,
+    down: cursors.down,
+    zoomIn: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q),
+    zoomOut: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E),
+    acceleration: 0.4,
+    drag: 0.1,
+    maxSpeed: 10.0
+  };
+
+  controls = new Phaser.Cameras.Controls.SmoothedKeyControl(controlConfig);
 }
 
-function update(time, delta) {}
+function update(time, delta) {
+  controls.update(delta);
+}
 
 new Game(config);

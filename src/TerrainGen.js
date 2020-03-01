@@ -27,7 +27,7 @@ export default (width, height, seed = Math.random()) => {
       return value;
     });
   });
-  const lowerBound = min - min * 0.6;
+  const lowerBound = min - min * 0.65;
   const maxBound = max - max * 0.3;
   const midBound = max - max * 0.6;
 
