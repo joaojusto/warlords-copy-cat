@@ -1,39 +1,23 @@
-import generator from "./TerrainGen";
+import Phaser, { Game } from "phaser";
 
-const INITIAL_STATE = {
-  map: null,
-  players: []
+import game from "./Game";
+import GameScene from "./GameScene";
+
+const physics = {
+  default: "arcade",
+  arcade: {
+    gravity: { y: 0 }
+  }
 };
 
-const game = () => {
-  let state = {
-    ...INITIAL_STATE
-  };
-
-  const loadMap = map => {
-    state = { ...state, map };
-  };
-
-  const saveMap = () => {
-    return state.map;
-  };
-
-  const addPlayer = player => {
-    const { players } = state;
-    state = { ...state, players: [...players, player] };
-  };
-
-  const generateMap = (width, height, seed = Math.random) => {
-    const map = generator(width, height);
-    state = { ...state, map };
-  };
-
-  return {
-    loadMap,
-    saveMap,
-    addPlayer,
-    generateMap
-  };
+const config = {
+  physics,
+  type: Phaser.AUTO,
+  width: 800,
+  height: 600,
+  parent: "App",
+  pixelArt: true,
+  scene: GameScene
 };
 
-export default game;
+new Game(config);
