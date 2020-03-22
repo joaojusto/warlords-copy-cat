@@ -2,14 +2,12 @@ import { Noise } from "noisejs";
 import { findLast, range, sample, sortBy } from "lodash";
 import { progress } from "@popmotion/popcorn";
 
-import {
-  TERRAIN_ID,
-  FOREST_ID,
-  SAND_ID,
-  CASTLE_ID,
-  MOUNTAIN_ID,
-  WATER_ID
-} from "./DynamicTileMap";
+export const TERRAIN_ID = [2];
+export const FOREST_ID = [4, 5, 6];
+export const SAND_ID = [8, 9, 10, 11, 12, 13, 14, 15];
+export const CASTLE_ID = [];
+export const MOUNTAIN_ID = [1];
+export const WATER_ID = [3, 7];
 
 const ZOOM_FACTOR = 12;
 
