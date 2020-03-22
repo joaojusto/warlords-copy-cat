@@ -1,9 +1,8 @@
-import { Math as PhaserMath } from "phaser";
+import { Math as PhaserMath, Scene as PhaserScene } from "phaser";
 
 import generator from "./TerrainGen";
 import Scene from "./Scene";
 import Map from "./Map";
-import MiniMap from "./MiniMap";
 import Movement from "./Movement";
 import Player from "./Player";
 
@@ -20,7 +19,7 @@ const worldToTile = (x, y) => ({
 
 export default class GameScene extends Scene {
   constructor() {
-    super(arguments);
+    super("GameScene");
     this.players = [];
   }
 
@@ -47,16 +46,18 @@ export default class GameScene extends Scene {
       MAP_HEIGHT
     );
     this.finder = finder;
+    this.terrainLayer = terrainLayer;
     const { tileWidth, tileHeight } = map;
 
     const player = this.addPlayer();
-    this.target = player.addArmy(
+    const army = player.addArmy(
       spawnPoint.x * tileWidth,
       spawnPoint.y * tileHeight,
       "warrior"
     );
+    army.body.setInteractive().on("pointerdown", () => (this.target = army));
+    this.target = army;
 
-    this.minimap = MiniMap(this, terrainLayer.width, terrainLayer.height);
     this.setupCamera(terrainLayer.width, terrainLayer.height);
     this.camera.centerOn(this.target.body.x, this.target.body.y);
 
@@ -65,28 +66,12 @@ export default class GameScene extends Scene {
     this.createMapControls();
     this.input.on("pointerdown", this.onPointerDown);
 
-    const title = this.add
-      .text(
-        20,
-        20,
-        `Current Player: ${player.name()}, turn: ${player.turn()}`,
-        { fill: "#000000" }
-      )
-      .setScrollFactor(0);
-
-    const button = this.add
-      .text(700, 560, `End Turn`, { fill: "#000000" })
-      .setScrollFactor(0)
-      .setInteractive()
-      .on("pointerdown", () => {
-        player.endTurn();
-        title.setText(
-          `Current Player: ${player.name()}, turn: ${player.turn()}`
-        );
-      });
+    this.scene.run("UI");
   }
 
   onPointerDown = ({ worldX, worldY }) => {
+    if (!this.target) return;
+
     const to = worldToTile(worldX, worldY);
     const from = worldToTile(this.target.body.x, this.target.body.y);
     const onPathCalculated = this.movement.move(this.target);

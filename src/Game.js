@@ -1,6 +1,7 @@
 import Phaser, { Game } from "phaser";
 
-import game from "./Game";
+// import game from "./Game";
+import UI from "./UI";
 import GameScene from "./GameScene";
 
 const physics = {
@@ -17,7 +18,7 @@ const config = {
   height: 600,
   parent: "App",
   pixelArt: true,
-  scene: GameScene
+  scene: [GameScene, UI]
 };
 
 new Game(config);

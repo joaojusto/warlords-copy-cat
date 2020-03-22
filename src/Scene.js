@@ -57,6 +57,14 @@ export default class Scene extends PhaserScene {
     this.selectedTarget = selectedTarget;
   }
 
+  get terrainLayer() {
+    return this.terrain;
+  }
+
+  set terrainLayer(terrainLayer) {
+    this.terrain = terrainLayer;
+  }
+
   createMapControls() {
     const { Q, E } = Input.Keyboard.KeyCodes;
     const { SmoothedKeyControl } = Cameras.Controls;
