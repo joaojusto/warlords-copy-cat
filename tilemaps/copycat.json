@@ -1,4 +1,4 @@
-{ "columns":3,
+{ "columns":4,
  "editorsettings":
     {
      "export":
@@ -8,12 +8,12 @@
         }
     },
  "image":"tileset.png",
- "imageheight":66,
- "imagewidth":100,
+ "imageheight":128,
+ "imagewidth":128,
  "margin":0,
  "name":"copycat",
  "spacing":0,
- "tilecount":6,
+ "tilecount":16,
  "tiledversion":"1.3.3",
  "tileheight":32,
  "tilewidth":32,
