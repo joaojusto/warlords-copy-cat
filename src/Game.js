@@ -7,6 +7,7 @@ import GameScene from "./GameScene";
 const physics = {
   default: "arcade",
   arcade: {
+    debug: true,
     gravity: { y: 0 }
   }
 };

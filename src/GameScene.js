@@ -17,6 +17,11 @@ const worldToTile = (x, y) => ({
   y: Math.floor(y / TILE_HEIGHT)
 });
 
+const tileToWorld = (x, y) => ({
+  x: Math.floor(x * TILE_WIDTH),
+  y: Math.floor(y * TILE_HEIGHT)
+});
+
 export default class GameScene extends Scene {
   constructor() {
     super("GameScene");
@@ -32,7 +37,7 @@ export default class GameScene extends Scene {
 
   preload() {
     this.load.setBaseURL(`${process.env.PUBLIC_URL}`);
-    this.load.image("tiles", "tilesets/tileset-extruded.png");
+    this.load.image("tileset", "tilesets/tileset-extruded.png");
     this.load.image("warrior", "warrior.png");
     // this.load.tilemapTiledJSON("map", "/tilemaps/copycat.json");
   }
@@ -49,17 +54,13 @@ export default class GameScene extends Scene {
     this.terrainLayer = terrainLayer;
     const { tileWidth, tileHeight } = map;
 
+    const spawn = tileToWorld(spawnPoint.x - 2, spawnPoint.y + 2);
+
     const player = this.addPlayer();
-    const army = player.addArmy(
-      spawnPoint.x * tileWidth,
-      spawnPoint.y * tileHeight,
-      "warrior"
-    );
-    army.body.setInteractive().on("pointerdown", () => (this.target = army));
-    this.target = army;
+    this.target = player.addArmy(spawn.x, spawn.y, "warrior");
 
     this.setupCamera(terrainLayer.width, terrainLayer.height);
-    this.camera.centerOn(this.target.body.x, this.target.body.y);
+    this.camera.centerOn(spawn.x, spawn.y);
 
     this.movement = Movement(this, costMatrix, tileWidth, tileHeight);
 
@@ -87,5 +88,6 @@ export default class GameScene extends Scene {
   update(time, delta) {
     this.controls.update(delta);
     this.camera.setZoom(PhaserMath.Clamp(this.camera.zoom, 0.08, 1));
+    this.players.forEach(player => player.update());
   }
 }

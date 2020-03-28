@@ -1,11 +1,19 @@
 import { Noise } from "noisejs";
-import { findLast, range, sample, sortBy } from "lodash";
+import {
+  findLast,
+  range,
+  sample,
+  sortBy,
+  includes,
+  every,
+  filter
+} from "lodash";
 import { progress } from "@popmotion/popcorn";
 
 export const TERRAIN_ID = [2];
 export const FOREST_ID = [4, 5, 6];
 export const SAND_ID = [8, 9, 10, 11, 12, 13, 14, 15];
-export const CASTLE_ID = [];
+export const CASTLE_ID = [16, 17, 24, 25];
 export const MOUNTAIN_ID = [1];
 export const WATER_ID = [3, 7];
 
@@ -128,12 +136,80 @@ export default (width, height, seed = Math.random()) => {
     })
   );
 
+  const randomTile = () => {
+    const x = Math.floor(Math.random() * width);
+    const y = Math.floor(Math.random() * height);
+    return { x, y };
+  };
+
+  const fitsCastle = ({ x, y }) => {
+    if (y - 1 < 0 || x - 1 < 0) return false;
+
+    const topLeft = normalized[y - 1][x - 1];
+    const topRight = normalized[y - 1][x];
+    const left = normalized[y][x - 1];
+    const right = normalized[y][x];
+
+    const isTerrain = value => includes(TERRAIN_ID, value);
+
+    return (
+      isTerrain(topLeft) &&
+      isTerrain(topRight) &&
+      isTerrain(left) &&
+      isTerrain(right)
+    );
+  };
+
+  const possiblePositions = normalized
+    .flatMap((row, y) => row.map((tile, x) => ({ x, y })))
+    .filter(fitsCastle);
+
+  const distance = (a, b) => Math.abs(b.x - a.x) + Math.abs(b.y - a.y);
+
+  const placeCastle = ({ x, y }) => {
+    normalized[y - 1][x - 1] = CASTLE_ID[0];
+    normalized[y - 1][x] = CASTLE_ID[1];
+    normalized[y][x - 1] = CASTLE_ID[2];
+    normalized[y][x] = CASTLE_ID[3];
+
+    return { x, y };
+  };
+
+  const outsideRadious = (points, point, radious) =>
+    every(points, existingPoint => distance(existingPoint, point) > radious);
+
+  const findCastlePosition = radious => (points, index) => {
+    let point = sample(possiblePositions);
+    let outside = outsideRadious(points, point, radious);
+
+    while (!outside) {
+      point = sample(possiblePositions);
+      outside = outsideRadious(points, point, radious);
+    }
+
+    return [...points, point];
+  };
+
+  const placeCastles = () => {
+    const amount = 20;
+    const exclusionRadious = 20;
+    const r = range(amount)
+      .reduce(findCastlePosition(exclusionRadious), [])
+      .map(placeCastle);
+
+    console.log(r.length);
+    console.log(r);
+
+    return r;
+  };
+
+  placeCastles();
+
   console.log(`Min: ${min}, Max: ${max}`);
   console.log(`<0: ${bellow0}, >0: ${above0}`);
   console.log(`Seed: ${seed}`);
 
   // console.log(islands.length, islands);
-
   // sortBy(islands, "length")
   //   .reverse()[0]
   //   .forEach(({ x, y, type }) => (normalized[y][x] = type));

@@ -1,3 +1,5 @@
+import Army from "./Army";
+
 const INITIAL_STATE = {
   turn: 1,
   name: "",
@@ -5,20 +7,6 @@ const INITIAL_STATE = {
   armies: [],
   castles: []
 };
-
-class Army {
-  constructor(scene, x, y, type) {
-    this.scene = scene;
-    this.movementPoints = 4;
-    this.body = scene.physics.add
-      .sprite(x, y, type)
-      .setDisplaySize(24, 24)
-      .setDisplayOrigin(-42, -44);
-  }
-
-  spendMovement = amount => (this.movementPoints -= amount);
-  resetMovement = () => (this.movementPoints = 4);
-}
 
 const player = (scene, id) => {
   let state = {
@@ -46,11 +34,13 @@ const player = (scene, id) => {
 
   const name = () => state.name;
   const turn = () => state.turn;
+  const update = () => state.armies.forEach(army => army.update());
 
   return {
     state,
     name,
     turn,
+    update,
     endTurn,
     addArmy
   };
