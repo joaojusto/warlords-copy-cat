@@ -71,7 +71,10 @@ export default (scene, world, width, height) => {
           scene.physics.world.enable(trigger);
           trigger.body.setAllowGravity(false);
           trigger.body.moves = false;
+          trigger.setInteractive();
           scene.triggers.push(trigger);
+          trigger.on("pointerover", () => scene.setOpenCursor());
+          trigger.on("pointerout", () => scene.setDefaultCursor());
         }
       } else terrainLayer.putTileAt(tile, x, y);
 

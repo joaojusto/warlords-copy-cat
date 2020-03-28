@@ -31,6 +31,8 @@ export default class UI extends Scene {
         title.setText(
           `Current Player: ${player.name()}, turn: ${player.turn()}`
         );
-      });
+      })
+      .on("pointerover", () => game.setClickCursor())
+      .on("pointerout", () => game.setDefaultCursor());
   }
 }

@@ -49,14 +49,6 @@ export default class Scene extends PhaserScene {
     this.minimapCamera = minimap;
   }
 
-  get target() {
-    return this.selectedTarget;
-  }
-
-  set target(selectedTarget) {
-    this.selectedTarget = selectedTarget;
-  }
-
   get terrainLayer() {
     return this.terrain;
   }

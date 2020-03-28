@@ -22,10 +22,38 @@ const tileToWorld = (x, y) => ({
   y: Math.floor(y * TILE_HEIGHT)
 });
 
+const cursor = name => {
+  return `url(${process.env.PUBLIC_URL}/${name}.png), pointer`;
+};
+
 export default class GameScene extends Scene {
   constructor() {
     super("GameScene");
     this.players = [];
+  }
+
+  get target() {
+    return this.selectedTarget;
+  }
+
+  set target(selectedTarget) {
+    this.selectedTarget = selectedTarget;
+
+    if (selectedTarget) this.input.setDefaultCursor(cursor("cursor_move"));
+    else this.input.setDefaultCursor(cursor("cursor"));
+  }
+
+  setClickCursor() {
+    this.input.setDefaultCursor(cursor("cursor"));
+  }
+
+  setOpenCursor() {
+    this.input.setDefaultCursor(cursor("cursor_open"));
+  }
+
+  setDefaultCursor() {
+    if (this.target) this.input.setDefaultCursor(cursor("cursor_move"));
+    else this.input.setDefaultCursor(cursor("cursor"));
   }
 
   addPlayer() {
@@ -43,6 +71,9 @@ export default class GameScene extends Scene {
   }
 
   create() {
+    this.input.setDefaultCursor(cursor("cursor"));
+    this.input.mouse.disableContextMenu();
+
     const world = generator(MAP_WIDTH, MAP_HEIGHT);
     const { map, finder, costMatrix, spawnPoint, terrainLayer } = Map(
       this,
@@ -70,9 +101,13 @@ export default class GameScene extends Scene {
     this.scene.run("UI");
   }
 
-  onPointerDown = ({ worldX, worldY }) => {
+  onPointerDown = pointer => {
+    if (pointer.rightButtonDown()) {
+      this.target = null;
+    }
     if (!this.target) return;
 
+    const { worldX, worldY } = pointer;
     const to = worldToTile(worldX, worldY);
     const from = worldToTile(this.target.body.x, this.target.body.y);
     const onPathCalculated = this.movement.move(this.target);
