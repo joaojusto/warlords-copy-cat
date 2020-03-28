@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/warlords-copy-cat/precache-manifest.a5ca0b7d77a8816324304d1b36423274.js"
+  "/warlords-copy-cat/precache-manifest.c3c10e9bce41efd5b26220541cd07bce.js"
 );
 
 self.addEventListener('message', (event) => {

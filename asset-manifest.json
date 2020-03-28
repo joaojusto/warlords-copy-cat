@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/warlords-copy-cat/static/css/main.146a9a2e.chunk.css",
-    "main.js": "/warlords-copy-cat/static/js/main.f71d34b9.chunk.js",
-    "main.js.map": "/warlords-copy-cat/static/js/main.f71d34b9.chunk.js.map",
+    "main.js": "/warlords-copy-cat/static/js/main.8b5cd85a.chunk.js",
+    "main.js.map": "/warlords-copy-cat/static/js/main.8b5cd85a.chunk.js.map",
     "runtime-main.js": "/warlords-copy-cat/static/js/runtime-main.0150e67d.js",
     "runtime-main.js.map": "/warlords-copy-cat/static/js/runtime-main.0150e67d.js.map",
     "static/js/2.ea955941.chunk.js": "/warlords-copy-cat/static/js/2.ea955941.chunk.js",
     "static/js/2.ea955941.chunk.js.map": "/warlords-copy-cat/static/js/2.ea955941.chunk.js.map",
     "index.html": "/warlords-copy-cat/index.html",
-    "precache-manifest.a5ca0b7d77a8816324304d1b36423274.js": "/warlords-copy-cat/precache-manifest.a5ca0b7d77a8816324304d1b36423274.js",
+    "precache-manifest.c3c10e9bce41efd5b26220541cd07bce.js": "/warlords-copy-cat/precache-manifest.c3c10e9bce41efd5b26220541cd07bce.js",
     "service-worker.js": "/warlords-copy-cat/service-worker.js",
     "static/css/main.146a9a2e.chunk.css.map": "/warlords-copy-cat/static/css/main.146a9a2e.chunk.css.map",
     "static/js/2.ea955941.chunk.js.LICENSE.txt": "/warlords-copy-cat/static/js/2.ea955941.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.0150e67d.js",
     "static/js/2.ea955941.chunk.js",
     "static/css/main.146a9a2e.chunk.css",
-    "static/js/main.f71d34b9.chunk.js"
+    "static/js/main.8b5cd85a.chunk.js"
   ]
 }
