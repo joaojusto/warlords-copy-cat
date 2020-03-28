@@ -2,6 +2,7 @@ import Phaser, { Game } from "phaser";
 
 // import game from "./Game";
 import UI from "./UI";
+import Modal from "./Modal";
 import GameScene from "./GameScene";
 
 const physics = {
@@ -19,7 +20,7 @@ const config = {
   height: 600,
   parent: "App",
   pixelArt: true,
-  scene: [GameScene, UI]
+  scene: [GameScene, UI, Modal]
 };
 
 new Game(config);

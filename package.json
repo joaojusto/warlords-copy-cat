@@ -8,6 +8,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@xaroth8088/random-names": "^1.1.1",
     "easystarjs": "^0.4.3",
     "lodash": "^4.17.15",
     "noisejs": "^2.1.0",

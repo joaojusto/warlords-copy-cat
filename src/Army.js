@@ -22,7 +22,7 @@ export default class Army {
       this.onCastle = false;
     });
 
-    this.scene.triggers.forEach(trigger => {
+    this.scene.castles.forEach(({ trigger }) => {
       this.scene.physics.add.overlap(this.body, trigger);
     });
   }

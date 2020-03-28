@@ -23,7 +23,11 @@ const pathReducer = (costMatrix, target) => (state, { x, y }) => {
       currentTurn: [...currentTurn, { x, y }]
     };
 
-  return { ...state, nextTurns: [...nextTurns, { x, y }] };
+  return {
+    ...state,
+    totalCost: totalCost + tileCost,
+    nextTurns: [...nextTurns, { x, y }]
+  };
 };
 
 export default (scene, costMatrix, tileWidth, tileHeight) => {

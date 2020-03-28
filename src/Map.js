@@ -8,6 +8,7 @@ import {
   MOUNTAIN_ID,
   WATER_ID
 } from "./TerrainGen";
+import Castle from "./Castle";
 
 const setTileCost = (costMatrix, finder) => (tile, x, y, cost) => {
   finder.setTileCost(tile, cost);
@@ -55,26 +56,18 @@ export default (scene, world, width, height) => {
 
   const costMatrix = [];
   const setCost = setTileCost(costMatrix, finder);
-  scene.triggers = [];
+  scene.castles = [];
 
   world.forEach((row, y) =>
     row.forEach((tile, x) => {
-      if (!spawnPoint && includes(CASTLE_ID, tile)) spawnPoint = { x, y };
-
       if (includes(CASTLE_ID, tile)) {
         terrainLayer.putTileAt(TERRAIN_ID[0], x, y);
         objectLayer.putTileAt(tile, x, y);
         if (tile === CASTLE_ID[0]) {
-          const trigger = scene.add
-            .zone(x * tileWidth + tileWidth, y * tileWidth + tileHeight)
-            .setSize(tileWidth * 2 + 64, tileHeight * 2 + 64);
-          scene.physics.world.enable(trigger);
-          trigger.body.setAllowGravity(false);
-          trigger.body.moves = false;
-          trigger.setInteractive();
-          scene.triggers.push(trigger);
-          trigger.on("pointerover", () => scene.setOpenCursor());
-          trigger.on("pointerout", () => scene.setDefaultCursor());
+          const castle = new Castle(scene, x, y, tileWidth, tileHeight);
+          if (!spawnPoint && includes(CASTLE_ID, tile))
+            spawnPoint = { x, y, castle };
+          scene.castles.push(castle);
         }
       } else terrainLayer.putTileAt(tile, x, y);
 

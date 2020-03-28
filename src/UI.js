@@ -4,8 +4,7 @@ import MiniMap from "./MiniMap";
 
 export default class UI extends Scene {
   constructor() {
-    super("UIScene");
-    Scene.call(this, { key: "UI", active: false });
+    super({ key: "UI", active: false });
   }
 
   create() {

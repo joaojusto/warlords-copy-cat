@@ -88,6 +88,7 @@ export default class GameScene extends Scene {
     const spawn = tileToWorld(spawnPoint.x - 2, spawnPoint.y + 2);
 
     const player = this.addPlayer();
+    spawnPoint.castle.setOwner(player);
     this.target = player.addArmy(spawn.x, spawn.y, "warrior");
 
     this.setupCamera(terrainLayer.width, terrainLayer.height);
@@ -99,6 +100,12 @@ export default class GameScene extends Scene {
     this.input.on("pointerdown", this.onPointerDown);
 
     this.scene.run("UI");
+
+    this.events.on("castleclicked", castle => {
+      this.setClickCursor();
+      this.scene.pause();
+      this.scene.run("Modal", { castle, player });
+    });
   }
 
   onPointerDown = pointer => {

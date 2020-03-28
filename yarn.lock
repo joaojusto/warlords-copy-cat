@@ -1595,6 +1595,13 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
+"@xaroth8088/random-names@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@xaroth8088/random-names/-/random-names-1.1.1.tgz#8131cbaa52901a17c5e4668fd9ff3b2423ecd109"
+  integrity sha512-v6lYJxqEIuUvCG4O4vsnKO4UUIFLI4HTEETJnp7QAsa1nERXkyc7nUNGbN/1UkrDAyN3UJeupYhf6YokUVZPPw==
+  dependencies:
+    lodash "^4.17.11"
+
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@xtuc/ieee754/-/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"
