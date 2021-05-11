@@ -10,7 +10,7 @@
     "@testing-library/user-event": "^7.1.2",
     "@xaroth8088/random-names": "^1.1.1",
     "easystarjs": "^0.4.3",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "noisejs": "^2.1.0",
     "phaser": "^3.22.0",
     "phaser3-rex-plugins": "^1.1.8",
